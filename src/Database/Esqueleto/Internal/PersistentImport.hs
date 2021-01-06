@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 -- | Re-export "Database.Persist.Sql" without any clashes with
 -- @esqueleto@.
 module Database.Esqueleto.Internal.PersistentImport
@@ -118,7 +119,13 @@ module Database.Esqueleto.Internal.PersistentImport
     Attr,
     Checkmark(..),
     CompositeDef(..),
+#if MIN_VERSION_persistent(2,12,0)
+    ConstraintNameDB(..),
+    EntityNameDB(..),
+    FieldNameDB(..),
+#else
     DBName(..),
+#endif
     EmbedEntityDef(..),
     EmbedFieldDef(..),
     EntityDef(..),
@@ -127,7 +134,13 @@ module Database.Esqueleto.Internal.PersistentImport
     FieldType(..),
     ForeignDef(..),
     ForeignFieldDef,
+#if MIN_VERSION_persistent(2,12,0)
+    ConstraintNameHS(..),
+    EntityNameHS(..),
+    FieldNameHS(..),
+#else
     HaskellName(..),
+#endif
     IsNullable(..),
     OnlyUniqueException(..),
     PersistException(..),
@@ -151,6 +164,7 @@ import Database.Persist.Sql hiding
        , delete
        , deleteCascadeWhere
        , deleteWhereCount
+       , exists
        , getPersistMap
        , limitOffsetOrder
        , listToJSON
@@ -174,5 +188,4 @@ import Database.Persist.Sql hiding
        , (>.)
        , (>=.)
        , (||.)
-       , exists
        )

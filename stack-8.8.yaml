@@ -5,8 +5,11 @@ packages:
   - 'examples'
 
 extra-deps:
-- persistent-2.11.0.0
-- persistent-template-2.9.1.0
-- persistent-mysql-2.10.3
-- persistent-postgresql-2.11.0.0
-- persistent-sqlite-2.11.0.0
+- git: git@github.com:jessekempf-interos/persistent.git
+  commit: 087cacf59b8631e4a8cb18349cbb9a8b6c681e5c
+  subdirs:
+    - persistent
+    - persistent-template
+    - persistent-mysql
+    - persistent-postgresql
+    - persistent-sqlite

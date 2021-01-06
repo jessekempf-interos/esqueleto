@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 
@@ -43,7 +44,11 @@ parseOnExpr sqlBackend text = do
 -- with postgresql, mysql, and sqlite backends.
 mkEscapeChar :: SqlBackend -> Either String Char
 mkEscapeChar sqlBackend =
+#if MIN_VERSION_persistent(2,12,0)
+    case Text.uncons (connEscapeRawName sqlBackend "") of
+#else
     case Text.uncons (connEscapeName sqlBackend (DBName "")) of
+#endif
         Nothing ->
             Left "Failed to get an escape character from the SQL backend."
         Just (c, _) ->
